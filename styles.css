@@ -1,0 +1,785 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-red: #ff3333;
+    --primary-dark: #1a1a1a;
+    --secondary-dark: #2d2d2d;
+    --accent-orange: #ff6b35;
+    --accent-yellow: #ffd700;
+    --text-light: #ffffff;
+    --text-gray: #b0b0b0;
+    --success-green: #00ff88;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-light);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Gym-themed background pattern */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255, 51, 51, 0.03) 35px, rgba(255, 51, 51, 0.03) 70px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+header {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-orange) 100%);
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(255, 51, 51, 0.4);
+    position: relative;
+    z-index: 10;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.logo-icon {
+    font-size: 3rem;
+    color: var(--text-light);
+    animation: rotate 3s ease-in-out infinite;
+}
+
+@keyframes rotate {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-15deg);
+    }
+
+    75% {
+        transform: rotate(15deg);
+    }
+}
+
+.logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    letter-spacing: 0.3rem;
+    color: var(--text-light);
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+    font-weight: 900;
+}
+
+.tagline {
+    font-size: 0.9rem;
+    letter-spacing: 0.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.progress-container {
+    width: 100%;
+    max-width: 600px;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    margin: 0 auto 0.8rem;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success-green) 0%, var(--accent-yellow) 100%);
+    transition: width 0.4s ease;
+    width: 0%;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.progress-text {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.card,
+.result-card {
+    background: linear-gradient(145deg, var(--secondary-dark) 0%, var(--primary-dark) 100%);
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 650px;
+    width: 100%;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 51, 51, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    border: 2px solid rgba(255, 51, 51, 0.3);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--primary-red), var(--accent-orange), var(--primary-red));
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.card:hover::before {
+    opacity: 0.3;
+}
+
+.back-btn {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    background: rgba(255, 51, 51, 0.2);
+    border: 2px solid var(--primary-red);
+    color: var(--text-light);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-weight: 600;
+}
+
+.back-btn:hover {
+    background: var(--primary-red);
+    transform: translateX(-5px);
+}
+
+.question-container {
+    margin-top: 2rem;
+}
+
+.question-text {
+    font-size: 1.6rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.option-btn {
+    background: linear-gradient(135deg, rgba(255, 51, 51, 0.1) 0%, rgba(255, 107, 53, 0.1) 100%);
+    border: 2px solid rgba(255, 51, 51, 0.3);
+    padding: 1.3rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: var(--text-light);
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+.option-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.option-btn:hover::before {
+    left: 100%;
+}
+
+.option-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 51, 51, 0.3) 0%, rgba(255, 107, 53, 0.3) 100%);
+    border-color: var(--primary-red);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(255, 51, 51, 0.4);
+}
+
+.option-btn:active {
+    background: linear-gradient(135deg, var(--success-green) 0%, #00cc6a 100%);
+    border-color: var(--success-green);
+    color: var(--primary-dark);
+    transform: scale(0.98);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.input-field {
+    padding: 1rem;
+    border: 2px solid rgba(255, 51, 51, 0.3);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--text-light);
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--primary-red);
+    box-shadow: 0 0 15px rgba(255, 51, 51, 0.3);
+}
+
+.btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-orange) 100%);
+    color: var(--text-light);
+    box-shadow: 0 5px 20px rgba(255, 51, 51, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(255, 51, 51, 0.6);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.result-card {
+    animation: zoomIn 0.5s ease;
+}
+
+.result-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.trophy-icon {
+    font-size: 4rem;
+    color: var(--accent-yellow);
+    margin-bottom: 1rem;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.result-card h2 {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+}
+
+#resultContent {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    border: 1px solid rgba(255, 51, 51, 0.2);
+}
+
+#resultContent h3 {
+    color: var(--primary-red);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#resultContent ul {
+    margin-left: 0;
+    margin-top: 0.5rem;
+}
+
+#resultContent li {
+    margin-bottom: 0.5rem;
+}
+
+.fade-out {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Modern Download Button */
+#downloadPdfBtn {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-orange) 100%);
+    border: none;
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(255, 51, 51, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    cursor: pointer;
+}
+
+/* =========================================
+   PDF Template Styles (Clean & Simple)
+   ========================================= */
+.pdf-container {
+    padding: 40px;
+    background: white;
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    max-width: 800px;
+    margin: 0 auto;
+    /* Ensure no weird clipping */
+    overflow: visible;
+}
+
+.pdf-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.pdf-header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    color: #ff3333;
+    font-size: 42px;
+    margin-bottom: 5px;
+}
+
+.pdf-divider {
+    height: 4px;
+    background: linear-gradient(90deg, #ff3333, #ff6b35);
+    margin: 15px 0;
+}
+
+.pdf-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.pdf-col h3 {
+    font-size: 16px;
+    border-bottom: 2px solid #ff3333;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    color: #222;
+}
+
+.pdf-list li {
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+/* Fix for incomplete cuts: Prevent breaking inside these blocks */
+.pdf-col,
+.pdf-advice,
+.pdf-intro {
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.pdf-advice {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-left: 5px solid #ff3333;
+}
+
+/* Pulse animation for primary button */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 5px 20px rgba(255, 51, 51, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 5px 30px rgba(255, 51, 51, 0.7);
+    }
+
+    100% {
+        box-shadow: 0 5px 20px rgba(255, 51, 51, 0.4);
+    }
+}
+
+.btn-primary {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+
+    .card,
+    .result-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .logo-text {
+        font-size: 2.5rem;
+        letter-spacing: 0.2rem;
+    }
+
+    .logo-icon {
+        font-size: 2rem;
+    }
+
+    .tagline {
+        font-size: 0.75rem;
+        letter-spacing: 0.2rem;
+    }
+
+    .question-text {
+        font-size: 1.3rem;
+    }
+
+    .option-btn {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+
+/* Chat Interface Styles */
+.chat-container {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(255, 107, 53, 0.05) 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    margin-top: 2rem;
+}
+
+.chat-header h3 {
+    color: var(--success-green);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.chat-messages {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.chat-message {
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    animation: slideIn 0.3s ease;
+    max-width: 85%;
+}
+
+.chat-message.ai {
+    background: rgba(0, 255, 136, 0.1);
+    border-left: 3px solid var(--success-green);
+    align-self: flex-start;
+}
+
+.chat-message.user {
+    background: rgba(255, 51, 51, 0.1);
+    border-right: 3px solid var(--primary-red);
+    align-self: flex-end;
+    text-align: right;
+}
+
+.msg-content {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+}
+
+.chat-message.user .msg-content {
+    flex-direction: row-reverse;
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#chatInput {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+}
+
+#sendChatBtn {
+    padding: 0 1.2rem;
+    background: var(--success-green);
+    color: var(--primary-dark);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#sendChatBtn:hover {
+    background: #00cc6a;
+    transform: translateY(-2px);
+}
+
+/* API Key Box */
+.api-key-box {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--accent-yellow);
+    margin-bottom: 1rem;
+}
+
+.api-key-box input {
+    flex: 1;
+    background: #222;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.btn-small {
+    background: var(--accent-yellow);
+    color: #000;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Logic Results Styling */
+.result-section {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    border-left: 3px solid transparent;
+}
+
+.result-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    color: var(--accent-orange);
+}
+
+.result-section.strategy {
+    border-color: var(--primary-red);
+}
+
+.highlight {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    background: rgba(255, 215, 0, 0.15);
+    color: var(--accent-yellow);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.advice-box {
+    margin-top: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 8px;
+    border-top: 2px solid var(--success-green);
+}
+
+
+/* Modern Download Button */
+#downloadPdfBtn {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-orange) 100%);
+    border: none;
+    border-radius: 50px;
+    /* Rounder */
+    padding: 0.6rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(255, 51, 51, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+}
+
+#downloadPdfBtn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(255, 51, 51, 0.4);
+    background: linear-gradient(135deg, var(--accent-orange) 0%, var(--primary-red) 100%);
+}
+
+#downloadPdfBtn:active {
+    transform: translateY(0) scale(0.98);
+}

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexpert - AI Fitness Coach</title>
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/flexpertlogo.png">
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <!-- <i class="fas fa-dumbbell logo-icon"></i> -->
+            <img src="img/flexpertlogo.png" alt="Flexpert Logo" class="logo-img"
+                style="height: 60px; margin-right: 15px;">
+            <h1 class="logo-text">FLEXPERT</h1>
+        </div>
+        <p class="tagline">INTELLIGENT WORKOUT SYSTEMS</p>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">
+            <i class="fas fa-clipboard-list"></i> Loading...
+        </div>
+    </header>
+
+    <main>
+        <!-- Question Card -->
+        <div class="card animate__animated animate__fadeIn" id="questionCard">
+            <button class="back-btn" id="backBtn" style="display: none;">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+
+            <div class="question-container">
+                <h2 class="question-text" id="questionText">Loading...</h2>
+                <div class="options-container" id="optionsContainer">
+                    <!-- Options injected here -->
+                </div>
+
+                <!-- Input for text questions if needed -->
+                <!-- Action Buttons (Submit) -->
+                <div class="action-buttons" id="actionButtons" style="display: none;">
+                    <button class="btn btn-primary" id="submitBtn">
+                        Get My Plan <i class="fas fa-bolt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Card -->
+        <div class="result-card animate__animated animate__zoomIn" id="resultCard" style="display: none;">
+            <div class="result-header">
+                <i class="fas fa-trophy trophy-icon"></i>
+                <h2>Your Personalized Plan</h2>
+                <button id="downloadPdfBtn" class="btn-primary"
+                    style="margin: 0 auto; display: flex; font-size: 0.9rem; padding: 0.5rem 1rem;">
+                    <i class="fas fa-file-pdf"></i> Download PDF
+                </button>
+            </div>
+
+            <div id="resultContent">
+                <!-- Results injected here -->
+            </div>
+
+            <!-- AI Chat Section -->
+            <div id="aiChatSection" class="chat-container">
+                <div class="chat-header">
+                    <h3><i class="fas fa-robot"></i> Flexpert AI Chat</h3>
+                </div>
+
+                <!-- API Key Input Removed as per user request (Hardcoded now) -->
+
+                <div id="chatMessages" class="chat-messages">
+                    <!-- Messages go here -->
+                </div>
+
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="Ask about form, nutrition, etc..." />
+                    <button id="sendChatBtn">
+                        <i class="fas fa-paper-plane"></i> Send
+                    </button>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn btn-secondary" id="restartBtn">
+                    <i class="fas fa-redo"></i> Start Over
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- HTML2PDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- Hidden PDF Template (Simple & Clean) -->
+    <div id="pdfTemplate" style="display: none;">
+        <div class="pdf-container">
+            <div class="pdf-header">
+                <img src="data:image/png;base64,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
+B1mnT2AAAAAElFTkSuQmCC" style="height: 80px; margin-bottom: 10px;" alt="Logo">
+                <h1 style="margin-top: 0;">FLEXPERT</h1>
+                <p style="letter-spacing: 2px; color: #666;">INTELLIGENT WORKOUT SYSTEMS</p>
+                <div class="pdf-divider"></div>
+            </div>
+
+            <div class="pdf-content">
+                <div class="pdf-intro" style="text-align: center; margin-bottom: 30px;">
+                    <h2 style="margin-bottom: 10px; color: #333;">Your Personalized Plan</h2>
+                    <p id="pdfStrategy" style="font-size: 18px; color: #ff3333; font-weight: bold;"></p>
+                </div>
+
+                <div class="pdf-grid">
+                    <!-- Column 1 -->
+                    <div class="pdf-col">
+                        <h3>Specific Exercises</h3>
+                        <ul id="pdfExercises" class="pdf-list" style="list-style: none; padding: 0;"></ul>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div class="pdf-col">
+                        <div style="margin-bottom: 25px;">
+                            <h3>Schedule</h3>
+                            <p id="pdfSchedule" style="font-weight: bold; font-size: 16px; margin: 0;"></p>
+                            <p id="pdfSession" style="color: #666; margin-top: 4px;"></p>
+                        </div>
+
+                        <div style="margin-bottom: 25px;">
+                            <h3>Intensity</h3>
+                            <p id="pdfIntensity"
+                                style="font-weight: bold; color: #ff3333; text-transform: uppercase; margin: 0;"></p>
+                        </div>
+
+                        <div>
+                            <h3>Equipment</h3>
+                            <p id="pdfEquipment" style="margin: 0;"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pdf-advice">
+                    <h3 style="margin-top: 0; color: #333;">Expert Advice</h3>
+                    <p id="pdfAdvice" style="color: #555; line-height: 1.6; margin: 0;"></p>
+                </div>
+            </div>
+
+            <div
+                style="margin-top: 50px; text-align: center; color: #ccc; font-size: 12px; padding-top: 20px; border-top: 1px solid #eee;">
+                Generated by Flexpert AI Fitness Coach
+            </div>
+        </div>
+    </div>
+
+    <!-- App Logic Scripts (Order Matters) -->
+    <script src="js/data.js"></script>
+    <script src="js/engine.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
