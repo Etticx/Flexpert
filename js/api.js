@@ -6,7 +6,7 @@
 const AIService = {
     // API Configuration
     // Reverting to hardcoded key as requested for school project simplicity
-    API_KEY: 'AIzaSyABXUcr1BVi_maVzEgnVNozxD_6rNvboTs',
+    API_KEY: 'AIzaSyDg2OM-o7hjk8z8JcUaRnmOrsQvmzM0lw4',
     API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
 
     // Key Management (Simplified)
