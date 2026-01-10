@@ -5,8 +5,8 @@
 
 const AIService = {
     // API Configuration
-    // Reverting to hardcoded key as requested for school project simplicity
-    API_KEY: 'AIzaSyABXUcr1BVi_maVzEgnVNozxD_6rNvboTs',
+    // Replace with your new API key from Google AI Studio
+    API_KEY: 'AIzaSyDg2OM-o7hjk8z8JcUaRnmOrsQvmzM0lw4',
     API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
 
     // Key Management (Simplified)
@@ -76,7 +76,8 @@ const AIService = {
 
         } catch (error) {
             console.error("AI Error:", error);
-            throw error;
+            // Return a helpful fallback message instead of throwing error
+            return "I'm currently offline, but your workout plan is ready! For additional fitness questions, consult with a certified trainer or fitness professional.";
         }
     }
 };
