@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comprehensive System Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-case { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .pass { background-color: #d4edda; border-color: #c3e6cb; }
+        .fail { background-color: #f8d7da; border-color: #f5c6cb; }
+        .test-title { font-weight: bold; margin-bottom: 10px; }
+        .test-result { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Comprehensive System Test</h1>
+    <div id="results"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/engine.js"></script>
+    <script>
+        const tests = [];
+        
+        function runTest(name, testFn) {
+            try {
+                const result = testFn();
+                tests.push({ name, status: 'pass', result });
+                return result;
+            } catch (error) {
+                tests.push({ name, status: 'fail', error: error.message });
+                return null;
+            }
+        }
+
+        // Test 1: Data Structure Integrity
+        runTest("Data Structure Integrity", () => {
+            const kb = window.knowledgeBase;
+            if (!kb) throw new Error("Knowledge base not loaded");
+            if (!kb.questions || kb.questions.length !== 7) throw new Error("Questions missing or incorrect count");
+            if (!kb.safetyRules || kb.safetyRules.length === 0) throw new Error("Safety rules missing");
+            if (!kb.strategyRules || kb.strategyRules.length === 0) throw new Error("Strategy rules missing");
+            if (!kb.exerciseDatabase) throw new Error("Exercise database missing");
+            return "✅ All data structures present and valid";
+        });
+
+        // Test 2: Safety Rule Explanations
+        runTest("Safety Rule Explanations", () => {
+            const safetyRules = window.knowledgeBase.safetyRules;
+            let rulesWithExplanations = 0;
+            safetyRules.forEach(rule => {
+                if (rule.overrides && rule.overrides.explanation) {
+                    rulesWithExplanations++;
+                }
+            });
+            if (rulesWithExplanations < 8) throw new Error(`Only ${rulesWithExplanations} rules have explanations`);
+            return `✅ ${rulesWithExplanations} safety rules have explanations`;
+        });
+
+        // Test 3: Broad Guy Home Edge Case
+        runTest("Broad Guy Home Edge Case", () => {
+            const testInput = {
+                goal: "muscle_gain",
+                body_type: "broad",
+                limitations: "none",
+                environment: "home",
+                intensity: "high",
+                days: "3-4",
+                duration: "30-40"
+            };
+            const result = window.InferenceEngine.run(testInput);
+            console.log("Broad Guy Test Result:", result);
+            
+            if (result.strategy !== "Heavy Dumbbell Control") {
+                throw new Error(`Expected "Heavy Dumbbell Control", got "${result.strategy}"`);
+            }
+            if (!result.explanation) {
+                throw new Error("No explanation provided");
+            }
+            // Check for key concepts in explanation rather than exact phrase
+            const hasHomeAdaptation = result.explanation.includes("home") || result.explanation.includes("dumbbell") || result.explanation.includes("tempo");
+            if (!hasHomeAdaptation) {
+                throw new Error(`Explanation doesn't contain home adaptation concepts. Got: "${result.explanation}"`);
+            }
+            return "✅ Broad guy home case works with proper explanation";
+        });
+
+        // Test 4: Safety Rule Override with Explanation
+        runTest("Safety Rule Override with Explanation", () => {
+            const testInput = {
+                goal: "muscle_gain",
+                body_type: "broad",
+                limitations: "upper_injury",
+                environment: "gym",
+                intensity: "high",
+                days: "3-4",
+                duration: "20-30"
+            };
+            const result = window.InferenceEngine.run(testInput);
+            if (!result.explanation || !result.explanation.includes("upper body injury")) {
+                throw new Error("Safety rule explanation not properly applied");
+            }
+            if (!result.exercises.includes("Squats")) {
+                throw new Error("Safety rule exercises not properly applied");
+            }
+            return "✅ Safety rule with explanation works correctly";
+        });
+
+        // Test 5: Equipment Filtering
+        runTest("Equipment Filtering", () => {
+            const testInput = {
+                goal: "strength",
+                body_type: "average",
+                limitations: "none",
+                environment: "home", // Should filter out gym-only exercises
+                intensity: "high",
+                days: "3-4",
+                duration: "20-30"
+            };
+            const result = window.InferenceEngine.run(testInput);
+            // Check that no gym-only exercises are included
+            const gymOnlyExercises = ["Leg Press", "Lat pulldown (Seated)"];
+            const hasGymOnly = result.exercises.some(ex => gymOnlyExercises.includes(ex));
+            if (hasGymOnly) {
+                throw new Error("Equipment filtering failed - gym exercises in home workout");
+            }
+            return "✅ Equipment filtering works correctly";
+        });
+
+        // Test 6: Duration Limiting
+        runTest("Duration Limiting", () => {
+            const testInput = {
+                goal: "strength",
+                body_type: "broad",
+                limitations: "none",
+                environment: "gym",
+                intensity: "high",
+                days: "3-4",
+                duration: "10-15" // Should limit to 3 exercises
+            };
+            const result = window.InferenceEngine.run(testInput);
+            if (result.exercises.length > 3) {
+                throw new Error(`Expected max 3 exercises for 10-15 min, got ${result.exercises.length}`);
+            }
+            return `✅ Duration limiting works (${result.exercises.length} exercises for 10-15 min)`;
+        });
+
+        // Test 7: Engine Integration
+        runTest("Engine Integration", () => {
+            if (!window.InferenceEngine) throw new Error("Inference engine not loaded");
+            if (typeof window.InferenceEngine.run !== 'function') throw new Error("Engine run method missing");
+            if (typeof window.InferenceEngine.matchesConditions !== 'function') throw new Error("Engine helper methods missing");
+            return "✅ Inference engine properly integrated";
+        });
+
+        // Test 8: Default Fallback
+        runTest("Default Fallback", () => {
+            const testInput = {
+                goal: "unknown_goal",
+                body_type: "unknown_type",
+                limitations: "none",
+                environment: "gym",
+                intensity: "moderate",
+                days: "3-4",
+                duration: "20-30"
+            };
+            const result = window.InferenceEngine.run(testInput);
+            if (!result.strategy || !result.exercises || result.exercises.length === 0) {
+                throw new Error("Default fallback not working");
+            }
+            return "✅ Default fallback works for unknown inputs";
+        });
+
+        // Display Results
+        function displayResults() {
+            const resultsDiv = document.getElementById('results');
+            let html = '';
+            let passCount = 0;
+            
+            tests.forEach(test => {
+                const cssClass = test.status === 'pass' ? 'pass' : 'fail';
+                if (test.status === 'pass') passCount++;
+                
+                html += `
+                    <div class="test-case ${cssClass}">
+                        <div class="test-title">${test.name}</div>
+                        <div class="test-result">
+                            ${test.status === 'pass' ? test.result : `❌ Error: ${test.error}`}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            const summary = `
+                <div class="test-case ${passCount === tests.length ? 'pass' : 'fail'}">
+                    <div class="test-title">📊 Test Summary</div>
+                    <div class="test-result">
+                        <strong>${passCount}/${tests.length} tests passed</strong>
+                        ${passCount === tests.length ? ' - System ready for presentation! 🎉' : ' - Issues need attention'}
+                    </div>
+                </div>
+            `;
+            
+            resultsDiv.innerHTML = summary + html;
+        }
+
+        // Run all tests
+        displayResults();
+    </script>
+</body>
+</html>
