@@ -18,6 +18,7 @@
 - Strategy = "High-Volume Calisthenics (Hypertrophy)"
 - Exercises = ["Push-ups (Decline/Incline)", "Doorframe Rows", "Single-leg Squats", "Chair Dips"]
 - Equipment = ["Resistance bands", "Chair", "Weighted Backpack (Optional)"]
+- Explanation = "Since heavy weights aren't available at home, we're using high-volume bodyweight exercises with explosive movements to stimulate muscle growth."
 - Advice = "Since heavy weights are unavailable, use explosive speed to build strength. Volume Training."
 
 ### Rule 2
@@ -26,6 +27,7 @@
 - Strategy = "Low-Impact Metabolic Strength"
 - Exercises = ["Box Squats (to Chair)", "Wall Push-ups", "Step-ups", "Band Pull-aparts"]
 - Intensity = "Moderate"
+- Explanation = "With limited training days and your body type, we're combining strength and cardio in low-impact movements to maximize fat burning while protecting your joints."
 - Advice = "Focus on diet on non-training days to supplement low frequency."
 
 ### Rule 3
@@ -34,6 +36,7 @@
 - Strategy = "Lower Body Power Focus"
 - Exercises = ["Leg Press (Heavy)", "Hack Squat", "Lunge Variations", "Core Bracing"]
 - Intensity = "Moderate"
+- Explanation = "Your upper body injury means we're channeling all your strength-building energy into your legs and core. This maintains your power development while allowing your upper body to heal properly."
 - Advice = "Maintain leg strength while rehabbing upper body."
 
 ### Rule 4
@@ -41,6 +44,7 @@
 **THEN**
 - Strategy = "EMOM (Every Minute on the Minute) Micro-Workouts"
 - Exercises = ["Burpees", "Jump Squats", "Plank to Push-up"]
+- Explanation = "With only 10-15 minutes available, we're using high-intensity interval training where you perform one exercise every minute. This maximizes fitness benefits in minimal time."
 - Advice = "Zero rest periods are required to make this duration effective."
 
 ### Rule 5
@@ -49,6 +53,7 @@
 - Strategy = "Seated/Upper Body Metabolic Conditioning"
 - Exercises = ["Battle Ropes (Seated)", "Speed Bag (Boxing)", "Seated Dumbbell Press (High Reps)", "Floor Press"]
 - Intensity = "Moderate"
+- Explanation = "Since your legs need rest, we're creating a fat-burning workout using seated upper body exercises. This keeps your heart rate elevated for calorie burn while protecting your injured lower body."
 - Advice = "Focus on upper body cardio to burn calories. Perform exercises seated to protect joints."
 
 ---
