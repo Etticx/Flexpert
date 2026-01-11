@@ -7,6 +7,7 @@ const InferenceEngine = {
     // Run the engine based on user answers
     run: function (userAnswers) {
         console.log("⚙️ Running Inference Engine with:", userAnswers);
+        console.log("🔄 Processing 84 rules across 7 priority levels...");
 
         // Check for special case rules first (highest priority overrides)
         for (const rule of window.knowledgeBase.specialRules) {
@@ -82,13 +83,32 @@ const InferenceEngine = {
         }
 
         // PRIORITY 4: Schedule & Duration Rules
+        // First pass: Goal-specific schedule rules (higher priority)
         for (const rule of window.knowledgeBase.scheduleRules) {
             if (this.matchesConditions(rule.conditions, userAnswers)) {
-                if (rule.schedule) {
+                const hasGoalAndDays = rule.conditions.goal && rule.conditions.days;
+                if (hasGoalAndDays && rule.schedule && !recommendation.schedule) {
                     recommendation.schedule = rule.schedule;
+                    console.log("📅 Goal-Specific Schedule Rule:", rule.schedule);
                 }
-                if (rule.sessionStyle) {
+                if (hasGoalAndDays && rule.sessionStyle && !recommendation.sessionStyle) {
                     recommendation.sessionStyle = rule.sessionStyle;
+                    console.log("⏱️ Goal-Specific Session Style:", rule.sessionStyle);
+                }
+            }
+        }
+        
+        // Second pass: Generic schedule rules (lower priority)
+        for (const rule of window.knowledgeBase.scheduleRules) {
+            if (this.matchesConditions(rule.conditions, userAnswers)) {
+                const isGeneric = rule.conditions.days && !rule.conditions.goal;
+                if (isGeneric && rule.schedule && !recommendation.schedule) {
+                    recommendation.schedule = rule.schedule;
+                    console.log("📅 Generic Schedule Rule:", rule.schedule);
+                }
+                if (isGeneric && rule.sessionStyle && !recommendation.sessionStyle) {
+                    recommendation.sessionStyle = rule.sessionStyle;
+                    console.log("⏱️ Generic Session Style:", rule.sessionStyle);
                 }
             }
         }
@@ -100,6 +120,42 @@ const InferenceEngine = {
                     recommendation.intensity = rule.finalIntensity;
                 }
                 break;
+            }
+        }
+
+        // PRIORITY 6: Duration-Intensity Matrix Rules (Higher priority for session style)
+        if (window.knowledgeBase.durationIntensityRules) {
+            for (const rule of window.knowledgeBase.durationIntensityRules) {
+                if (this.matchesConditions(rule.conditions, userAnswers)) {
+                    // Duration-intensity rules override schedule session styles
+                    if (rule.sessionStyle) {
+                        recommendation.sessionStyle = rule.sessionStyle;
+                        console.log("⏱️ Duration-Intensity Session Style (Override):", rule.sessionStyle);
+                    }
+                    if (!recommendation.advice) {
+                        recommendation.advice = rule.advice;
+                        console.log("💡 Duration-Intensity Advice:", rule.advice);
+                    }
+                    break;
+                }
+            }
+        }
+
+        // PRIORITY 7: Environment Context Rules
+        if (window.knowledgeBase.environmentRules) {
+            for (const rule of window.knowledgeBase.environmentRules) {
+                if (this.matchesConditions(rule.conditions, userAnswers)) {
+                    // Environment advice supplements existing advice or provides fallback
+                    if (!recommendation.advice) {
+                        recommendation.advice = rule.advice;
+                        console.log("🏠 Environment Context Advice:", rule.advice);
+                    } else {
+                        // Combine advice if both exist
+                        recommendation.advice += " " + rule.advice;
+                        console.log("🏠 Environment Context Added:", rule.advice);
+                    }
+                    break;
+                }
             }
         }
 

@@ -13,6 +13,17 @@
 ## PRIORITY 1: SPECIAL CASE RULES
 
 ### Rule 1
+**IF** duration = "10-15" AND limitations = "none"  
+**THEN**
+- Strategy = "High-Density Training (EDT)"
+- Exercises = ["Burpees", "Dumbbell Thrusters", "Renegade Rows", "Mountain Climbers"]
+- Schedule = "AMRAP (As Many Rounds As Possible) in 15 mins"
+- SessionStyle = "Non-stop flow"
+- Intensity = "High"
+- Explanation = "With only 15 minutes, we prioritized 'Flow'. These exercises chain together seamlessly to maximize work density without wasting time changing weights or setups."
+- Advice = "Keep your dumbbells close. Do not stop moving until the timer rings."
+
+### Rule 2
 **IF** goal = "muscle_gain" AND environment = "home" AND limitations = "none" AND body_type = ["slim", "average"]  
 **THEN**
 - Strategy = "High-Volume Calisthenics (Hypertrophy)"
@@ -21,7 +32,7 @@
 - Explanation = "Since heavy weights aren't available at home, we're using high-volume bodyweight exercises with explosive movements to stimulate muscle growth."
 - Advice = "Since heavy weights are unavailable, use explosive speed to build strength. Volume Training."
 
-### Rule 2
+### Rule 3
 **IF** goal = "fat_loss" AND body_type = "heavier" AND days = "2-3"  
 **THEN**
 - Strategy = "Low-Impact Metabolic Strength"
@@ -30,7 +41,7 @@
 - Explanation = "With limited training days and your body type, we're combining strength and cardio in low-impact movements to maximize fat burning while protecting your joints."
 - Advice = "Focus on diet on non-training days to supplement low frequency."
 
-### Rule 3
+### Rule 4
 **IF** goal = "strength" AND limitations = "upper_injury"  
 **THEN**
 - Strategy = "Lower Body Power Focus"
@@ -39,7 +50,7 @@
 - Explanation = "Your upper body injury means we're channeling all your strength-building energy into your legs and core. This maintains your power development while allowing your upper body to heal properly."
 - Advice = "Maintain leg strength while rehabbing upper body."
 
-### Rule 4
+### Rule 5
 **IF** goal = "general_health" AND duration = "10-15" AND intensity = "high"  
 **THEN**
 - Strategy = "EMOM (Every Minute on the Minute) Micro-Workouts"
@@ -47,7 +58,7 @@
 - Explanation = "With only 10-15 minutes available, we're using high-intensity interval training where you perform one exercise every minute. This maximizes fitness benefits in minimal time."
 - Advice = "Zero rest periods are required to make this duration effective."
 
-### Rule 5
+### Rule 6
 **IF** goal = "fat_loss" AND limitations = "lower_injury"  
 **THEN**
 - Strategy = "Seated/Upper Body Metabolic Conditioning"
@@ -133,13 +144,20 @@
 ## PRIORITY 3: STRATEGY RULES
 
 ### Rule 17
+**IF** goal = "fat_loss" AND body_type = ["slim", "average"] AND environment = "gym"  
+**THEN**
+- Strategy = "Heavy Compound Recomposition"
+- Exercises = ["Deadlift", "Bench press", "Squats", "Lat pulldown (Seated)", "Overhead Press", "Planks"]
+- Explanation = "Based on your body type, pure cardio might make you lose muscle tone. We are using 'Body Recomposition'—heavy compound lifting to boost your metabolism and define your shape while burning fat."
+
+### Rule 18
 **IF** goal = "fat_loss" AND body_type = ["slim", "average"]  
 **THEN**
 - Strategy = "High-rep cardio + short fat-burning circuits"
 - Exercises = ["Burpees", "High Knees", "Squats", "Push-ups", "Lunges", "Planks", "Step-ups"]
 - Explanation = "For your body type and fat loss goal, we're using high-intensity circuits to maximize calorie burn and boost your metabolism."
 
-### Rule 18
+### Rule 19
 **IF** goal = "fat_loss" AND body_type = ["broad", "heavier"]  
 **THEN**
 - Strategy = "Strength + HIIT hybrid for fat loss and tone"
@@ -168,20 +186,27 @@
 - Explanation = "Your broad build gives you natural strength advantages - we're maximizing this with heavy leg work to build serious muscle mass and power."
 
 ### Rule 22
+**IF** goal = "strength" AND environment = "home"  
+**THEN**
+- Strategy = "Unilateral Strength & Stability"
+- Exercises = ["Pistol Squats (or progression)", "One-arm Push-ups", "Seated dumbbell press", "Planks", "Lunges"]
+- Explanation = "Since you don't have heavy barbells at home, we build strength by using 'Unilateral' (single-limb) movements. This increases the intensity without needing hundreds of pounds of weight."
+
+### Rule 23
 **IF** goal = "strength"  
 **THEN**
 - Strategy = "Chest-focused strength + conditioning"
 - Exercises = ["Bench press", "Deadlift", "Squats", "Seated dumbbell press", "Bicep curls", "Push-ups", "Planks"]
 - Explanation = "Building functional strength with compound movements - this program develops real-world power and athletic performance."
 
-### Rule 23
+### Rule 24
 **IF** goal = "general_health" AND limitations = "none"  
 **THEN**
 - Strategy = "Balanced wellness with easy chest activation"
 - Exercises = ["Squats", "Push-ups", "Planks", "Lunges", "Bicep curls", "Glute Bridges", "Step-ups"]
 - Explanation = "A well-rounded approach to fitness that builds strength, endurance, and mobility for overall health and longevity."
 
-### Rule 24
+### Rule 25
 **IF** goal = "general_health" AND limitations = "cardio_issues"  
 **THEN**
 - Strategy = "Very low impact strengthening"
@@ -325,12 +350,12 @@
 6. **Apply Intensity Rules** (Rules 32-43) - Final intensity adjustment based on user preference AND limitations
 7. **Apply Default Rule** (Rule 43) - Fill any missing fields
 
-## TOTAL RULES: 43
+## TOTAL RULES: 46
 
 **Rule Distribution:**
-- Special Case Rules: 5
+- Special Case Rules: 6
 - Safety & Limitation Rules: 10
-- Strategy Rules: 8
+- Strategy Rules: 10
 - Equipment Rules: 2
 - Schedule & Duration Rules: 6
 - Intensity Adjustment Rules: 12

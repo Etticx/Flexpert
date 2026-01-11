@@ -130,7 +130,7 @@
             const testInput = {
                 goal: "strength",
                 body_type: "broad",
-                limitations: "none",
+                limitations: "upper_injury", // Adding limitation to avoid special rule trigger
                 environment: "gym",
                 intensity: "high",
                 days: "3-4",
@@ -167,6 +167,30 @@
                 throw new Error("Default fallback not working");
             }
             return "✅ Default fallback works for unknown inputs";
+        });
+
+        // Test 9: Executive Time-Crunch Rule
+        runTest("Executive Time-Crunch Rule", () => {
+            const testInput = {
+                goal: "strength",
+                body_type: "average",
+                limitations: "none",
+                environment: "gym",
+                intensity: "high",
+                days: "3-4",
+                duration: "10-15"
+            };
+            const result = window.InferenceEngine.run(testInput);
+            if (result.strategy !== "High-Density Training (EDT)") {
+                throw new Error(`Expected "High-Density Training (EDT)", got "${result.strategy}"`);
+            }
+            if (!result.exercises.includes("Burpees")) {
+                throw new Error("Executive rule exercises not properly applied");
+            }
+            if (result.sessionStyle !== "Non-stop flow") {
+                throw new Error("Executive rule session style not applied");
+            }
+            return "✅ Executive time-crunch rule works correctly";
         });
 
         // Display Results
