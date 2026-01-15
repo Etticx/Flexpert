@@ -608,10 +608,11 @@ const knowledgeBase = {
     ],
 
     // SPECIAL CASE RULES (Extra Priority - Override specific combinations)
+    // SPECIAL CASE RULES (Extra Priority - Override specific combinations)
     specialRules: [
         
         {
-            conditions: { goal: "muscle_gain", environment: "home", limitations: "none", body_type: ["slim", "average"] },
+            conditions: { goal: "muscle_gain", environment: "gym", limitations: "none", body_type: ["slim", "average"] },
             recommendation: {
                 strategy: "High-Volume Calisthenics (Hypertrophy)",
                 exercises: ["Push-ups (Decline/Incline)", "Doorframe Rows", "Single-leg Squats", "Chair Dips"],
@@ -624,7 +625,7 @@ const knowledgeBase = {
             }
         },
         {
-            conditions: { goal: "fat_loss", body_type: "heavier", days: "2-3" },
+            conditions: { goal: "fat_loss", body_type: "heavier", days: "2-3", environment: "gym"},
             recommendation: {
                 strategy: "Low-Impact Metabolic Strength",
                 exercises: ["Box Squats (to Chair)", "Wall Push-ups", "Step-ups", "Band Pull-aparts"],
@@ -637,7 +638,7 @@ const knowledgeBase = {
             }
         },
         {
-            conditions: { goal: "strength", limitations: "upper_injury" },
+            conditions: { goal: "strength", limitations: "upper_injury", environment: "gym"},
             recommendation: {
                 strategy: "Lower Body Power Focus",
                 exercises: ["Leg Press (Heavy)", "Hack Squat", "Lunge Variations", "Core Bracing"],
@@ -663,7 +664,7 @@ const knowledgeBase = {
             }
         },
         {
-            conditions: { goal: "fat_loss", limitations: "lower_injury" },
+            conditions: { goal: "fat_loss", limitations: "lower_injury", environment: "gym"},
             recommendation: {
                 strategy: "Seated/Upper Body Metabolic Conditioning",
                 exercises: ["Battle Ropes (Seated)", "Speed Bag (Boxing)", "Seated Dumbbell Press (High Reps)", "Floor Press"],
@@ -676,6 +677,7 @@ const knowledgeBase = {
             }
         }
     ],
+
 
     // Default fallback
     defaultRecommendation: {
