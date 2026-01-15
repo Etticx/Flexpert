@@ -227,7 +227,7 @@ const knowledgeBase = {
         }
     ],
 
-    // ... (Remainder kept same, just ensuring db is there)
+
 
     // PRIORITY 2: STRATEGY RULES (Goal + Body Type) - EXPANDED TO 18 RULES
     strategyRules: [
@@ -609,6 +609,7 @@ const knowledgeBase = {
 
     // SPECIAL CASE RULES (Extra Priority - Override specific combinations)
     specialRules: [
+        
         {
             conditions: { goal: "muscle_gain", environment: "home", limitations: "none", body_type: ["slim", "average"] },
             recommendation: {
