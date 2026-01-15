@@ -610,19 +610,6 @@ const knowledgeBase = {
     // SPECIAL CASE RULES (Extra Priority - Override specific combinations)
     specialRules: [
         {
-            conditions: { duration: "10-15", limitations: "none" },
-            recommendation: {
-                strategy: "High-Density Training (EDT)",
-                exercises: ["Burpees", "Dumbbell Thrusters", "Renegade Rows", "Mountain Climbers"],
-                schedule: "AMRAP (As Many Rounds As Possible) in 15 mins",
-                sessionStyle: "Non-stop flow",
-                intensity: "High",
-                explanation: "With only 15 minutes, we prioritized 'Flow'. These exercises chain together seamlessly to maximize work density without wasting time changing weights or setups.",
-                advice: "Keep your dumbbells close. Do not stop moving until the timer rings.",
-                equipment: ["Dumbbells"]
-            }
-        },
-        {
             conditions: { goal: "muscle_gain", environment: "home", limitations: "none", body_type: ["slim", "average"] },
             recommendation: {
                 strategy: "High-Volume Calisthenics (Hypertrophy)",
