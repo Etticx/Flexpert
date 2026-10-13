@@ -609,46 +609,44 @@ const knowledgeBase = {
 
     // SPECIAL CASE RULES (Extra Priority - Override specific combinations)
     specialRules: [
+        
         {
-            conditions: { duration: "10-15", limitations: "none" },
-            recommendation: {
-                strategy: "High-Density Training (EDT)",
-                exercises: ["Burpees", "Dumbbell Thrusters", "Renegade Rows", "Mountain Climbers"],
-                schedule: "AMRAP (As Many Rounds As Possible) in 15 mins",
-                sessionStyle: "Non-stop flow",
-                intensity: "High",
-                explanation: "With only 15 minutes, we prioritized 'Flow'. These exercises chain together seamlessly to maximize work density without wasting time changing weights or setups.",
-                advice: "Keep your dumbbells close. Do not stop moving until the timer rings."
-            }
-        },
-        {
-            conditions: { goal: "muscle_gain", environment: "home", limitations: "none", body_type: ["slim", "average"] },
+            conditions: { goal: "muscle_gain", environment: "gym", limitations: "none", body_type: ["slim", "average"] },
             recommendation: {
                 strategy: "High-Volume Calisthenics (Hypertrophy)",
                 exercises: ["Push-ups (Decline/Incline)", "Doorframe Rows", "Single-leg Squats", "Chair Dips"],
                 equipment: ["Resistance bands", "Chair", "Weighted Backpack (Optional)"],
                 explanation: "Since heavy weights aren't available at home, we're using high-volume bodyweight exercises with explosive movements to stimulate muscle growth.",
-                advice: "Since heavy weights are unavailable, use explosive speed to build strength. Volume Training."
+                advice: "Since heavy weights are unavailable, use explosive speed to build strength. Volume Training.",
+                schedule: "4 Days Upper/Lower Split", 
+                sessionStyle: "High Volume / Circuit",
+                intensity: "High"
             }
         },
         {
-            conditions: { goal: "fat_loss", body_type: "heavier", days: "2-3" },
+            conditions: { goal: "fat_loss", body_type: "heavier", days: "2-3"},
             recommendation: {
                 strategy: "Low-Impact Metabolic Strength",
-                exercises: ["Box Squats (to Chair)", "Wall Push-ups", "Step-ups", "Band Pull-aparts"],
+                exercises: ["Box Squats (to Chair)", "Wall Push-ups", "Step-ups"],
                 intensity: "Moderate",
                 explanation: "With limited training days and your body type, we're combining strength and cardio in low-impact movements to maximize fat burning while protecting your joints.",
-                advice: "Focus on diet on non-training days to supplement low frequency."
+                advice: "Focus on diet on non-training days to supplement low frequency.",
+                schedule: "2-3 Days Full Body Circuit",
+                sessionStyle: "Steady Pace (No Jumping)",
+                equipment: ["Chair", "Bands"]
             }
         },
         {
-            conditions: { goal: "strength", limitations: "upper_injury" },
+            conditions: { goal: "strength", limitations: "upper_injury", environment: "gym"},
             recommendation: {
                 strategy: "Lower Body Power Focus",
                 exercises: ["Leg Press (Heavy)", "Hack Squat", "Lunge Variations", "Core Bracing"],
                 intensity: "Moderate",
                 explanation: "Your upper body injury means we're channeling all your strength-building energy into your legs and core. This maintains your power development while allowing your upper body to heal properly.",
-                advice: "Maintain leg strength while rehabbing upper body."
+                advice: "Maintain leg strength while rehabbing upper body.",
+                schedule: "3 Days Lower Body Focus",
+                sessionStyle: "Strength Sets (Rest 2-3 mins)",
+                equipment: ["Machine", "Leg press machine"]
             }
         },
         {
@@ -657,17 +655,24 @@ const knowledgeBase = {
                 strategy: "EMOM (Every Minute on the Minute) Micro-Workouts",
                 exercises: ["Burpees", "Jump Squats", "Plank to Push-up"],
                 explanation: "With only 10-15 minutes available, we're using high-intensity interval training where you perform one exercise every minute. This maximizes fitness benefits in minimal time.",
-                advice: "Zero rest periods are required to make this duration effective."
+                advice: "Zero rest periods are required to make this duration effective.",
+                schedule: "Daily Micro-Workouts",
+                sessionStyle: "Interval Timer (EMOM)",
+                intensity: "High",
+                equipment: ["None"]
             }
         },
         {
-            conditions: { goal: "fat_loss", limitations: "lower_injury" },
+            conditions: { goal: "fat_loss", limitations: "lower_injury", environment: "gym"},
             recommendation: {
                 strategy: "Seated/Upper Body Metabolic Conditioning",
                 exercises: ["Battle Ropes (Seated)", "Speed Bag (Boxing)", "Seated Dumbbell Press (High Reps)", "Floor Press"],
                 intensity: "Moderate",
                 explanation: "Since your legs need rest, we're creating a fat-burning workout using seated upper body exercises. This keeps your heart rate elevated for calorie burn while protecting your injured lower body.",
-                advice: "Focus on upper body cardio to burn calories. Perform exercises seated to protect joints."
+                advice: "Focus on upper body cardio to burn calories. Perform exercises seated to protect joints.",
+                schedule: "3-4 Days Upper Body Cardio",
+                sessionStyle: "Seated Intervals",
+                equipment: ["Ropes", "Machine", "Dumbbells"]
             }
         }
     ],
@@ -683,5 +688,4 @@ const knowledgeBase = {
     }
 };
 
-// Make available globally
-window.knowledgeBase = knowledgeBase;
+export { knowledgeBase };

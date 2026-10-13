@@ -1,30 +1,26 @@
 /**
  * Flexpert AI Service
  * Handles communication with Google Gemini API
+ *
+ * The API key is injected at build time by Vite from the .env file.
+ * Never hardcode the key here — set VITE_GEMINI_API_KEY in .env instead.
  */
 
 const AIService = {
-    // API Configuration
-    // Replace with your new API key from Google AI Studio
-    API_KEY: 'AIzaSyDg2OM-o7hjk8z8JcUaRnmOrsQvmzM0lw4',
+    // Vite replaces import.meta.env.VITE_GEMINI_API_KEY with the
+    // actual value at build time. The key never appears in source code.
+    API_KEY: import.meta.env.VITE_GEMINI_API_KEY,
     API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
 
-    // Key Management (Simplified)
-    getKey: function () {
-        return this.API_KEY;
-    },
-
-    setKey: function (key) {
-        // No-op
-    },
-
     hasKey: function () {
-        return true; // Always has key now
+        return !!this.API_KEY && this.API_KEY !== 'your_gemini_api_key_here';
     },
 
     // Send a message to the AI
     chat: async function (userMessage, currentPlan) {
-        const apiKey = this.getKey();
+        if (!this.hasKey()) {
+            return "AI chat is unavailable — VITE_GEMINI_API_KEY is not set in your .env file.";
+        }
 
         // Prepare System Prompt
         let systemPrompt = `You are a helpful fitness assistant integrated into Flexpert, an AI fitness coaching app. 
@@ -60,7 +56,7 @@ const AIService = {
         };
 
         try {
-            const response = await fetch(`${this.API_URL}?key=${apiKey}`, {
+            const response = await fetch(`${this.API_URL}?key=${this.API_KEY}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestBody)
@@ -76,10 +72,9 @@ const AIService = {
 
         } catch (error) {
             console.error("AI Error:", error);
-            // Return a helpful fallback message instead of throwing error
             return "I'm currently offline, but your workout plan is ready! For additional fitness questions, consult with a certified trainer or fitness professional.";
         }
     }
 };
 
-window.AIService = AIService;
+export default AIService;

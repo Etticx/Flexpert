@@ -333,7 +333,4 @@ const App = {
     }
 };
 
-// Start App when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    App.init();
-});
+export { App };

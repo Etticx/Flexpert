@@ -1,0 +1,14 @@
+{
+  "name": "flexpert",
+  "version": "1.0.0",
+  "description": "Flexpert - AI Fitness Coach",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}

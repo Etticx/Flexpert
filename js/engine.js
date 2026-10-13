@@ -10,15 +10,30 @@ const InferenceEngine = {
         console.log("🔄 Processing 84 rules across 7 priority levels...");
 
         // Check for special case rules first (highest priority overrides)
+        let specialRuleMatched = false;
+        let recommendation = {};
+        
         for (const rule of window.knowledgeBase.specialRules) {
             if (this.matchesConditions(rule.conditions, userAnswers)) {
                 console.log("✨ Special Rule Matched:", rule);
-                return this.buildRecommendation(rule.recommendation);
+                recommendation = rule.recommendation;
+                specialRuleMatched = true;
+                break;
             }
         }
+        
+        // If special rule matched, skip to filtering
+        if (specialRuleMatched) {
+            let finalRec = this.buildRecommendation(recommendation);
+            
+            // Apply filters to special rule recommendations
+            finalRec.exercises = this.filterExercisesByEquipment(finalRec.exercises, finalRec.equipment);
+            finalRec.exercises = this.filterExercisesByDuration(finalRec.exercises, userAnswers.duration);
+            
+            return finalRec;
+        }
 
-        // Build recommendation by applying rules in priority order
-        let recommendation = {};
+        // Build recommendation by applying rules in priority order (only if no special rule matched)
 
         // PRIORITY 1: Safety & Limitation Rules
         for (const rule of window.knowledgeBase.safetyRules) {
@@ -193,7 +208,7 @@ const InferenceEngine = {
         if (!duration || !exercises) return exercises;
 
         const exerciseCount = {
-            "10-15": 3,  // Short session: 3 exercises
+            "10-15": 4,  // Short session: 4 exercises
             "20-30": 5,  // Medium session: 5 exercises  
             "30-40": 7   // Long session: 7 exercises
         };
@@ -217,15 +232,10 @@ const InferenceEngine = {
 
         const filtered = exercises.filter(exName => {
             const exData = db[exName];
-            // If unknown exercise, keep it (assume safe/bodyweight?) - Or remove? Expert choice: Remove unknown to be safe.
-            // BUT for this project, let's keep unknown to avoid empty lists if I missed a DB entry.
             if (!exData) return true;
 
             const required = exData.equipment;
-            // Check if ANY of the required equipment items are in userEquipment
-            // Wait, logic: "Bench Press" requires ["Barbell", "Bench"]. Needs ALL? Or "Barbell OR Dumbbells"? 
-            // My DB design: "Bicep curls": ["Dumbbells", "Barbell", "Bands"] -> This means ANY of these work.
-            // So logic is: Does user have AT LEAST ONE of the required items?
+            //
 
             // Special case: "None" always passes
             if (required.includes("None")) return true;
@@ -260,4 +270,4 @@ const InferenceEngine = {
     }
 };
 
-window.InferenceEngine = InferenceEngine;
+export { InferenceEngine };
