@@ -227,7 +227,7 @@ const knowledgeBase = {
         }
     ],
 
-    // ... (Remainder kept same, just ensuring db is there)
+
 
     // PRIORITY 2: STRATEGY RULES (Goal + Body Type) - EXPANDED TO 18 RULES
     strategyRules: [
@@ -608,6 +608,7 @@ const knowledgeBase = {
     ],
 
     // SPECIAL CASE RULES (Extra Priority - Override specific combinations)
+    // SPECIAL CASE RULES (Extra Priority - Override specific combinations)
     specialRules: [
         
         {
@@ -624,7 +625,11 @@ const knowledgeBase = {
             }
         },
         {
+<<<<<<< HEAD
             conditions: { goal: "fat_loss", body_type: "heavier", days: "2-3"},
+=======
+            conditions: { goal: "fat_loss", body_type: "heavier", days: "2-3", environment: "gym"},
+>>>>>>> cdcfc3901cd3fc0689221edc31001a7ba90eaacf
             recommendation: {
                 strategy: "Low-Impact Metabolic Strength",
                 exercises: ["Box Squats (to Chair)", "Wall Push-ups", "Step-ups"],
@@ -676,6 +681,7 @@ const knowledgeBase = {
             }
         }
     ],
+
 
     // Default fallback
     defaultRecommendation: {
